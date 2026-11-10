@@ -1,4 +1,4 @@
-name: Build Kindred Android App
+name: Build Kindred Android APK
 
 on:
   workflow_dispatch:
@@ -9,30 +9,23 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Get Kindred source
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Install Java
-        uses: actions/setup-java@v4
+      - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
 
-      - name: Install Flutter
-        uses: subosito/flutter-action@v2
+      - uses: subosito/flutter-action@v2
         with:
           channel: stable
 
-      - name: Get dependencies
-        run: flutter pub get
+      - run: flutter pub get
 
-      - name: Build Android APK
-        run: flutter build apk --release
+      - run: flutter build apk --release
 
-      - name: Upload Kindred APK
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
           name: Kindred-Android
           path: build/app/outputs/flutter-apk/app-release.apk
